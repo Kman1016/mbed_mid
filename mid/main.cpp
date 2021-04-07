@@ -84,7 +84,7 @@ int button()
   while (1)
   {
     
-    if (b1.read() == 1 && Fre > 1 
+    if (b1.read() == 1 && Fre > 1)
     {
       rate /= 2;
       uLCD.cls();
