@@ -1,5 +1,4 @@
 #include "mbed.h"
-#include "TextLCD.h"
 #include "uLCD_4DGL.h"
 
 using namespace std::chrono;
@@ -11,7 +10,7 @@ DigitalIn b0(D10);
 DigitalIn b1(D11);
 DigitalIn b2(D12);
 
-AnalogOut aout(PA_4);
+AnalogOut aout(D7);
 AnalogIn ain(A0);
 
 Thread t1;
@@ -24,16 +23,12 @@ EventQueue queue(16 * EVENTS_EVENT_SIZE);
 
 void samplef();
 int button();
-
-void LCD(int sel);
 void ulcd();
-
 void Fre_change();
 void wave_g();
 
 int rate = 8;
 int T = 8;
-int r = 0;
 
 int main()
 {
@@ -55,7 +50,9 @@ void wave_g()
       aout = i;
       ThisThread::sleep_for(T * 1ms);
     }
+
     ThisThread::sleep_for(midT * 1ms);
+
     for (; i > 0.0f; i -= 0.1f) {
       aout = i;
       ThisThread::sleep_for(T * 1ms);
@@ -67,11 +64,11 @@ void samplef()
 {
   int sample = 1000;
   float ain_data;
-  int rate = 1000 / sample;
+  int r = 1000 / sample;
   while(1) {
     ain_data = ain;
     printf("%f\r\n", ain_data);
-    ThisThread::sleep_for(rate * 1ms);
+    ThisThread::sleep_for(r * 1ms);
   }
 }
 
@@ -105,11 +102,13 @@ void Fre_change()
     ThisThread::sleep_for(300ms);
 }
 void ulcd()
-{
+{   
+  while (1) {
     uLCD.text_width(3); //4X size text
     uLCD.text_height(3);  
     uLCD.color(RED);
     uLCD.locate(1,2);
-    uLCD.printf("rate = %d", rate);
-    ThisThread::sleep_for(500ms);
+    uLCD.printf("rate = %d", T);
+    //ThisThread::sleep_for(500ms);
+  }
 }
