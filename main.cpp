@@ -27,7 +27,7 @@ void sampling(){
   }
 }
 
-void generate_wave(){ //100,200,300
+void generate_wave(){
   float i;
   int midT = (240 - (20 * rate))*10;     // middle sleep
   while (1) {
