@@ -42,7 +42,7 @@ int main()
   t3.start(callback(&queue, &EventQueue::dispatch_forever));
   YES.rise(queue.event(Fre_change));
   t4.start(wave_g);
-  t5.start(ulcd)
+  t5.start(ulcd);
 }
 
 void wave_g()
@@ -84,13 +84,13 @@ int button()
   while (1)
   {
     
-    if (b1.read() == 1 && Fre > 1)
+    if (b1.read() == 1 && rate > 1)
     {
       rate /= 2;
       uLCD.cls();
       ThisThread::sleep_for(500ms);
     }
-    else if (b2.read() == 1 && Fre < 8)
+    else if (b2.read() == 1 && rate < 8)
     {
       rate *= 2;
       uLCD.cls();
